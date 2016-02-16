@@ -11,7 +11,9 @@
 ##
 
 import json
+import codecs
 import argparse
+from pprint import pprint
 
 def processArgs():
     parser = argparse.ArgumentParser(description=
@@ -24,7 +26,7 @@ def processArgs():
 
 def main():
     args = processArgs()
-    
 
+    data = json.loads(codecs.open(args.file, "r", encoding='utf-8', errors='ignore').read())
 
 main()
