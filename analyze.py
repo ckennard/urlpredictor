@@ -26,7 +26,12 @@ def processArgs():
 
 def main():
     args = processArgs()
+    ratings = {}
 
     data = json.loads(codecs.open(args.file, "r", encoding='utf-8', errors='ignore').read())
+
+    for d in data:
+        cur = d['url']
+        print cur
 
 main()
