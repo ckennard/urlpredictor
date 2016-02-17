@@ -26,25 +26,31 @@ def processArgs():
 
 def analyzeDays(z, ratings):
 
-   cur = z['domain_age_days']
-   if 0 <= cur <= 200:
-      ratings = +1
-      return ratings
-   else:
-      cur = "Porbably fine"
-      return cur
+    cur = z['domain_age_days']
+
+    if cur <= 200:
+       ratings = +1
+       print cur
+       return ratings
+    else:
+       ratings = 0
+       return ratings
 
 
 def main():
     args = processArgs()
     ratings = {}
-    badNumb = 0
 
     data = json.loads(codecs.open(args.file, "r", encoding='utf-8', errors='ignore').read())
 
     for d in data:
-        cur = d['url']
-        print cur
+       cur = d['url']
+       print cur
+
+       testRating = analyzeDays(d, ratings)
+       print testRating
+       
+	
 
 	
 
