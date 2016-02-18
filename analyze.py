@@ -33,7 +33,6 @@ def analyzeDays(z, ratings):
        print cur
        return ratings
     else:
-       ratings = 0
        return ratings
 
 
