@@ -52,6 +52,15 @@ def urlAnalyzer(data, rating):
 
     return rating
 
+def analyzeDays(z, rating):
+
+    cur = z['domain_age_days']
+
+    if cur <= 200:
+       rating = rating + 1
+
+   return rating
+
 def main():
     args = processArgs()
     ratings = {}
@@ -63,5 +72,6 @@ def main():
         ratings[cur] = 0
 
         ratings[cur] = urlAnalyzer(d, ratings[cur])
+        ratings[cur] = analyzeDays(d, ratings[cur])
 
 main()
