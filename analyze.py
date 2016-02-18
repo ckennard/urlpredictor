@@ -1,4 +1,4 @@
-##
+#!/usr/bin/env python
 #  Project: URL ANALYZER
 #  Class:   Defense Against the Dark Arts
 #  Week:    6
@@ -7,29 +7,36 @@
 #           John Miller
 #           Chris Kennard
 #           Justin Bruntmyer
-#
-##
-
 import json
 import codecs
 import argparse
 import math
 from pprint import pprint
-
 def processArgs():
     parser = argparse.ArgumentParser(description=
 	'Parse and analyze URLs and determine whether they are trustworthy or not'
     )
     parser.add_argument('-F', '--file', type=str)
-
     args = parser.parse_args()
     return args
 
+def checkIPs(d, rating, ipfile, found):
+    if d != None and d != 'null':
+        if isinstance(d, basestring):
+            for line in ipfile:
+                if d in line:
+                    return rating + 5
+        else:
+            for ip in d:
+                for line in ipfile:
+                    if str(d) in line:
+                        return rating + 5
+
 def getAlexa(alexaRank, rating):
     if(str(alexaRank) != 'None'):
-        return int(math.floor(int(alexaRank)/250000))
+        return rating + int(math.floor(int(alexaRank)/500000))
     else:
-        return 5
+        return rating + 2
 
 def urlAnalyzer(data, rating):
     badPort = False
@@ -70,16 +77,21 @@ def analyzeDays(z, rating):
 
 def main():
     args = processArgs()
+    i=0
     ratings = {}
-
     data = json.loads(codecs.open(args.file, "r", encoding='utf-8', errors='ignore').read())
 
+    ipfile = open('ips.txt', 'r')
+    ipfile = ipfile.readlines()
+    found = False
     for d in data:
+        i+=1
         cur = d['url']
         ratings[cur] = 0
 
         ratings[cur] = getAlexa(d['alexa_rank'], ratings[cur])
         ratings[cur] = urlAnalyzer(d, ratings[cur])
         ratings[cur] = analyzeDays(d, ratings[cur])
-
+        ratings[cur] = checkIPs(d['ips'], ratings[cur], ipfile, found)
+        #print cur
 main()
