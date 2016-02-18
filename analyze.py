@@ -13,6 +13,7 @@
 import json
 import codecs
 import argparse
+import math
 from pprint import pprint
 
 def processArgs():
@@ -23,6 +24,12 @@ def processArgs():
 
     args = parser.parse_args()
     return args
+
+def getAlexa(alexaRank, rating):
+    if(str(alexaRank) != 'None'):
+        return int(math.floor(int(alexaRank)/250000))
+    else:
+        return 5
 
 def urlAnalyzer(data, rating):
     badPort = False
@@ -71,6 +78,7 @@ def main():
         cur = d['url']
         ratings[cur] = 0
 
+        ratings[cur] = getAlexa(d['alexa_rank'], ratings[cur])
         ratings[cur] = urlAnalyzer(d, ratings[cur])
         ratings[cur] = analyzeDays(d, ratings[cur])
 
