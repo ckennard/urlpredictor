@@ -24,6 +24,18 @@ def processArgs():
     args = parser.parse_args()
     return args
 
+def analyzeDays(z, ratings):
+
+    cur = z['domain_age_days']
+
+    if cur <= 200:
+       ratings = +1
+       print cur
+       return ratings
+    else:
+       return ratings
+
+
 def main():
     args = processArgs()
     ratings = {}
@@ -31,7 +43,16 @@ def main():
     data = json.loads(codecs.open(args.file, "r", encoding='utf-8', errors='ignore').read())
 
     for d in data:
-        cur = d['url']
-        print cur
+       cur = d['url']
+       print cur
+
+       testRating = analyzeDays(d, ratings)
+       print testRating
+       
+	
+
+	
 
 main()
+
+#analyzeDays()
