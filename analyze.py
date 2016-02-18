@@ -59,7 +59,7 @@ def analyzeDays(z, rating):
     if cur <= 200:
        rating = rating + 1
 
-   return rating
+    return rating
 
 def main():
     args = processArgs()
