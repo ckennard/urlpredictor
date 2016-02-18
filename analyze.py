@@ -42,6 +42,5 @@ def main():
         ratings[cur] = 0
 
         ratings[cur] = getAlexa(d['alexa_rank'], ratings[cur])
-        print ratings[cur]
 
 main()
